@@ -5,7 +5,7 @@ Only total stardust cost is implemented, since this information may not be easil
 Steps to obtain Pokemon json file:
 
 1. Open Chrome, goto pokeiv.net and login
-2. Open console and type in `angular.element('ng-controller=AppCtrl').scope().pokemons`
+2. Open console and type in `angular.element('[ng-controller=AppCtrl]').scope().pokemons`
 3. Right click on the array object returned and choose "save as global variable"
 4. There should be a variable name like `temp1` returned
 5. Type in `copy(temp1)` in the console, or replace `temp1` if it is not the same name as yours
