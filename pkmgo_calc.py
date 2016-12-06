@@ -101,9 +101,6 @@ class Pokemon:
                 height, weight, nickname)
         raise ValueError('No {} found with CP: {}'.format(base_stat[num]['name'],cp))
         
-    
-    def get_level(self):
-        return self.level
         
     def get_cp(self):
         if self.cp is not None:
@@ -132,12 +129,16 @@ class Pokemon:
             return 0
         return self.get_stardust_cost()-Pokemon(self.num, self.a, self.d, self.h, self.level - self.num_upgrades * 0.5).get_stardust_cost()
   
-def total_stardust_cost(file, verbose = True):
+
+def init_db(file):
     all_pkm_raw = json.loads(open(file).read())
-    all_pokemon = [Pokemon.from_cp(pkm['pokemon_id'], pkm['iv_attack'], pkm['iv_defence'], pkm['iv_stamina'], 
+    return [Pokemon.from_cp(pkm['pokemon_id'], pkm['iv_attack'], pkm['iv_defence'], pkm['iv_stamina'], 
                                pkm['cp'], pkm['num_upgrades'], pkm['catch_date'], pkm['move1'], pkm['move1_en'],
                                pkm['move2'], pkm['move2_en'], pkm['height'], pkm['weight'], pkm['nickname'])
                for pkm in all_pkm_raw]
+
+def total_stardust_cost(file, verbose = True):
+    all_pokemon = init_db(file)
     if verbose:
         powered = []
         for pkm in all_pokemon:
