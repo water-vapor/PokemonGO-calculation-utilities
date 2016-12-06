@@ -18,3 +18,7 @@ Usage:
 1. `cd` to the path you download this script along with `PKMBase.csv`
 2. `python pkmgo_calc.py -f /path/to/yourfile.json -s`
 
+Example screenshot:
+
+<img src="/images/stardust_example.png" height="700">
+
