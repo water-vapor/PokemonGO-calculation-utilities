@@ -1,4 +1,4 @@
-import csv, json, argparse, pprint
+import csv, json, argparse, pprint, sys, os
 
 try:
     import tabulate
@@ -6,16 +6,18 @@ try:
 except ImportError:
     tabulate_installed = False
 
-
-#not safe here, should add exception handling later
-with open('PKMBase.csv') as cf:
-    r = csv.reader(cf, delimiter=',')
-    base_stat = [dict(zip(['num','name','hp','atk','def'], row)) for row in r]
-    for stat in base_stat:
-        stat['num'] = int(stat['num'])
-        stat['atk'] = int(stat['atk'])
-        stat['def'] = int(stat['def'])
-        stat['hp'] = int(stat['hp'])
+try:
+    with open('PKMBase.csv') as cf:
+        r = csv.reader(cf, delimiter=',')
+        base_stat = [dict(zip(['num','name','hp','atk','def'], row)) for row in r]
+        for stat in base_stat:
+            stat['num'] = int(stat['num'])
+            stat['atk'] = int(stat['atk'])
+            stat['def'] = int(stat['def'])
+            stat['hp'] = int(stat['hp'])
+except IOError:
+    print('PKMBase.csv not found. Please place it here: {}'.format(os.path.dirname(os.path.abspath(__file__))))
+    sys.exit(1)
     
 #prepend a dummy element to match index with pokedex number
 base_stat.insert(0, [])
