@@ -1,5 +1,12 @@
 import csv, json, argparse, pprint
 
+try:
+    import tabulate
+    tabulate_installed = True
+except ImportError:
+    tabulate_installed = False
+
+
 #not safe here, should add exception handling later
 with open('PKMBase.csv') as cf:
     r = csv.reader(cf, delimiter=',')
@@ -135,9 +142,13 @@ def total_stardust_cost(file, verbose = True):
         powered = []
         for pkm in all_pokemon:
             if pkm.get_total_stardust_cost() != 0:
-                powered.append([base_stat[pkm.num]['name'], "CP:", pkm.get_cp(), pkm.move1_name, pkm.move2_name, pkm.level, pkm.get_total_stardust_cost()])
+                powered.append([base_stat[pkm.num]['name'], pkm.get_cp(), pkm.move1_name, pkm.move2_name, pkm.level, pkm.get_total_stardust_cost()])
         powered.sort(key=lambda x:x[-1], reverse=True)
-        pprint.pprint(powered)
+        if tabulate_installed:
+            print(tabulate.tabulate(powered))
+        else:
+            print("use command: \"pip install tabulate\" to install tabulate package to get pretty prints")
+            pprint.pprint(powered)
     return sum([pkm.get_total_stardust_cost() for pkm in all_pokemon])
 
 
