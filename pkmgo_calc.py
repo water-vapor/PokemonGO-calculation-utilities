@@ -96,7 +96,7 @@ class Pokemon:
     def from_cp(cls, num, a, d, h, cp, num_upgrades = None, catch_date = None, 
                 move1_num = None, move1_name = None, move2_num = None, move2_name = None,
                 height = None, weight = None, nickname = None):
-        for lv in range(2,79):
+        for lv in range(78,1,-1):
             if cls(num, a, d, h, lv/2).get_cp() == cp:
                 return cls(num, a, d, h, lv/2, num_upgrades, catch_date, 
                 move1_num, move1_name, move2_num, move2_name,
