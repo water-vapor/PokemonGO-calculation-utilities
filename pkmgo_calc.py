@@ -147,7 +147,7 @@ def total_stardust_cost(file, verbose = True):
         if tabulate_installed:
             print(tabulate.tabulate(powered))
         else:
-            print("use command: \"pip install tabulate\" to install tabulate package to get pretty prints")
+            print("use command: \"pip install tabulate\" or \"conda install\" to install tabulate package to get pretty prints")
             pprint.pprint(powered)
     return sum([pkm.get_total_stardust_cost() for pkm in all_pokemon])
 
