@@ -7,7 +7,7 @@ except ImportError:
     tabulate_installed = False
 
 try:
-    with open('PKMBase.csv') as cf:
+    with open('PKMBase.csv', 'rb') as cf:
         r = csv.reader(cf, delimiter=',')
         base_stat = [dict(zip(['num','name','hp','atk','def'], row)) for row in r]
         for stat in base_stat:
