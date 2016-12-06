@@ -1,4 +1,4 @@
-import csv, json, argparse
+import csv, json, argparse, pprint
 
 #not safe here, should add exception handling later
 with open('PKMBase.csv') as cf:
@@ -125,12 +125,19 @@ class Pokemon:
             return 0
         return self.get_stardust_cost()-Pokemon(self.num, self.a, self.d, self.h, self.level - self.num_upgrades * 0.5).get_stardust_cost()
   
-def total_stardust_cost(file):
+def total_stardust_cost(file, verbose = True):
     all_pkm_raw = json.loads(open(file).read())
     all_pokemon = [Pokemon.from_cp(pkm['pokemon_id'], pkm['iv_attack'], pkm['iv_defence'], pkm['iv_stamina'], 
                                pkm['cp'], pkm['num_upgrades'], pkm['catch_date'], pkm['move1'], pkm['move1_en'],
                                pkm['move2'], pkm['move2_en'], pkm['height'], pkm['weight'], pkm['nickname'])
                for pkm in all_pkm_raw]
+    if verbose:
+        powered = []
+        for pkm in all_pokemon:
+            if pkm.get_total_stardust_cost() != 0:
+                powered.append([base_stat[pkm.num]['name'], "CP:", pkm.get_cp(), pkm.move1_name, pkm.move2_name, pkm.level, pkm.get_total_stardust_cost()])
+        powered.sort(key=lambda x:x[-1], reverse=True)
+        pprint.pprint(powered)
     return sum([pkm.get_total_stardust_cost() for pkm in all_pokemon])
 
 
@@ -140,6 +147,6 @@ if __name__ == "__main__":
     parser.add_argument('-s', '--stardust', action='store_true', help='calculate all stardust cost')
     args = parser.parse_args()
     if args.stardust is True:
-        print(total_stardust_cost(args.file))
+        print("Total Cost: ", total_stardust_cost(args.file))
     else:
         parser.print_help()
