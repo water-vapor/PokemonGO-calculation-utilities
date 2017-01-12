@@ -137,7 +137,7 @@ def init_db(file):
     return [Pokemon.from_cp(pkm['pokemon_id'], pkm['iv_attack'], pkm['iv_defence'], pkm['iv_stamina'], 
                                pkm['cp'], pkm['num_upgrades'], pkm['catch_date'], pkm['move1'], pkm['move1_en'],
                                pkm['move2'], pkm['move2_en'], pkm['height'], pkm['weight'], pkm['nickname'])
-               for pkm in all_pkm_raw]
+               for pkm in all_pkm_raw if pkm['pokemon_id'] < 150]
 
 def total_stardust_cost(file, verbose = True):
     all_pokemon = init_db(file)
